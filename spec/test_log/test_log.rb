@@ -6,21 +6,20 @@ class TestLog
     @logfile.sync = true
 
     @rand = Random.new
-    @ips = ['127.0.0.1', '192.168.0.1', '12.2.12.0', '128.0.1.127']
-    @names = ['jane', 'joe-jj', 'test']
+    @ips = %w(127.0.0.1 192.168.0.1 12.2.12.0 128.0.1.127)
+    @names = %w(jane joe-jj test)
     @users = @names
     @methods = %w(POST HEAD PUT DELETE OPTIONS TRACE CONNECT)
-    @paths = ['/', '/user', '/user/create', '/user/delete', '/user/list',
-              '/user/edit', '/home', '/admin', '/admin/parameters']
-    @protocols = ['HTTP/1.0', 'HTTP/1.1']
+    @paths = %w(/ /user /user/create /user/delete /user/list
+                /user/edit /home /admin /admin/parameters)
+    @protocols = %w(HTTP/1.0 HTTP/1.1)
     @status = %w(404 403 418 301)
   end
 
   def start
-    launch_scenario(1, 10)
-    launch_scenario(0.1, 10)
-    launch_scenario(0.01, 10)
-    launch_scenario(0, 10)
+    [1, 0.1, 0.01, 0, 0.1, 0.1].each do |sleep_time|
+      launch_scenario(sleep_time, 10)
+    end
   end
 
   protected

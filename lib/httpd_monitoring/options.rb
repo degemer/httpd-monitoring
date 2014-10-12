@@ -7,5 +7,9 @@ module HttpdMonitoring
     def path
       './spec/temp.log'
     end
+
+    def threshold
+      1000
+    end
   end
 end

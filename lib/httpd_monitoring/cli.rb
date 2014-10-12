@@ -4,7 +4,7 @@ module HttpdMonitoring
     def initialize(args)
       @parsed_args = HttpdMonitoring::Options.new(args)
       @data = HttpdMonitoring::Data.new
-      @parser = HttpdMonitoring::Processor.new(@data)
+      @parser = HttpdMonitoring::Processor.new(@data, @parsed_args.threshold)
       @path = @parsed_args.path
       @reporter = HttpdMonitoring::Reporter.new(@data)
     end

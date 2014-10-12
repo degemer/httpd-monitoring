@@ -1,5 +1,6 @@
 module HttpdMonitoring
   class Data
+    attr_reader :hits_2min
     def initialize
       @data_10s = []
       @hits_2min = 0

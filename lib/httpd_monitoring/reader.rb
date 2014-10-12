@@ -8,8 +8,7 @@ module HttpdMonitoring
 
     def receive_data(data)
       @buffer.extract(data).each do |line|
-        # @processor.process(line)
-        print line + "\n"
+        @processor.process(line)
       end
     end
   end

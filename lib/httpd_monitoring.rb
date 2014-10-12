@@ -1,0 +1,10 @@
+require 'eventmachine'
+require 'eventmachine-tail'
+
+require_relative 'httpd_monitoring/data'
+require_relative 'httpd_monitoring/reporter'
+require_relative 'httpd_monitoring/processor'
+require_relative 'httpd_monitoring/reader'
+require_relative 'httpd_monitoring/options'
+require_relative 'httpd_monitoring/parser'
+require_relative 'httpd_monitoring/cli'

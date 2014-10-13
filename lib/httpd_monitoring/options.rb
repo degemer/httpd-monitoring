@@ -5,7 +5,7 @@ module HttpdMonitoring
     end
 
     def path
-      './spec/temp.log'
+      'spec/temp.log'
     end
 
     def threshold

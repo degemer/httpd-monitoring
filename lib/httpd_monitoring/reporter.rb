@@ -6,7 +6,7 @@ module HttpdMonitoring
     end
 
     def report
-      print 'Report'
+      print "Report\n"
     end
   end
 end

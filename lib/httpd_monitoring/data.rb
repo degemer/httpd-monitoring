@@ -3,8 +3,12 @@ module HttpdMonitoring
   class Data
     attr_reader :hits_2min
     def initialize
-      @data_10s = []
-      @hits_2min = 0
+      @last_time = Time.at(0)
+      @sections_10s = Hash.new(0)
+      @traffic_10s = 0
+      @ips_10s = Hash.new(0)
+      @traffic_2min = 0
+      @times_2min = 0
     end
 
     def insert(data)

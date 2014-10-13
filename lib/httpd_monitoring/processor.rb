@@ -9,7 +9,8 @@ module HttpdMonitoring
     end
 
     def process(line)
-      @data.insert(@parser.parse(line))
+      print @parser.parse(line)
+      # @data.insert(@parser.parse(line))
       # alert_or_recover(@data.hits_2min)
     end
 

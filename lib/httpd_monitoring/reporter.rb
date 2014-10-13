@@ -1,4 +1,5 @@
 module HttpdMonitoring
+  # Print a report to console when asked
   class Reporter
     def initialize(data)
       @data = data

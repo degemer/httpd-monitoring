@@ -1,4 +1,5 @@
 module HttpdMonitoring
+  # Read line from w3c-log and then pass it to a HttpdMonitoring::Processor
   class Reader < EventMachine::FileTail
     def initialize(path, processor)
       super(path, -1)

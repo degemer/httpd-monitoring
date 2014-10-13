@@ -1,4 +1,5 @@
 module HttpdMonitoring
+  # Receive w3c-log line, store it and then trigger alert if needed
   class Processor
     def initialize(data, threshold)
       @data = data
@@ -13,8 +14,8 @@ module HttpdMonitoring
     end
 
     def alert_or_recover(hits)
-      send_alert if(!@alert && hits >= @threshold)
-      send_recover if(@alert && hits < @threshold)
+      send_alert if !@alert && hits >= @threshold
+      send_recover if @alert && hits < @threshold
     end
 
     def send_alert

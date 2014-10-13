@@ -1,8 +1,6 @@
 module HttpdMonitoring
+  # Parse a w3c log line into a Hash
   class Parser
-    def initialize
-    end
-
     def parse(line)
       line =~ /^(.+) (.+) (.+) \[(.+)\] "(\w+) (.+) (.+)" (\d+) (\d+)$/
       result = {}

@@ -1,7 +1,7 @@
 module HttpdMonitoring
   # Command line parsing
   class Options
-    def initialize(args)
+    def initialize(_args)
     end
 
     def path

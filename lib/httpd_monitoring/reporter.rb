@@ -6,7 +6,7 @@ module HttpdMonitoring
     end
 
     def report
-      print "Report\n"
+      print @data.select_data_10s.to_s + "\n"
     end
   end
 end

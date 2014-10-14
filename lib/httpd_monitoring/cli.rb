@@ -11,8 +11,10 @@ module HttpdMonitoring
 
     def run
       EventMachine.run do
-        Signal.trap('INT')  { EventMachine.stop }
-        Signal.trap('TERM') { EventMachine.stop }
+        Signal.trap('INT') do
+          EventMachine.stop
+          Thread.exit
+        end
         EventMachine.file_tail(@path, HttpdMonitoring::Reader, @parser)
         EventMachine::PeriodicTimer.new(10) do
           @reporter.report

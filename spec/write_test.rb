@@ -7,10 +7,6 @@ def run_w3c_test
   FileUtils.touch(log_file)
   thread = Thread.new { HttpdMonitoring::CLI.new([log_file]).run }
   test = TestLog.new(log_file)
-  trap('INT') do
-    puts 'Exiting test'
-    thread.exit
-  end
   test.start
 
   thread.exit

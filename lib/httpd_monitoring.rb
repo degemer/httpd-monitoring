@@ -1,6 +1,7 @@
 require 'eventmachine'
 require 'eventmachine-tail'
 require 'colorize'
+require 'filesize'
 
 require_relative 'httpd_monitoring/data'
 require_relative 'httpd_monitoring/reporter'

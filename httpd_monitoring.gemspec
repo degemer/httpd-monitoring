@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.add_dependency('eventmachine')
   s.add_dependency('eventmachine-tail')
   s.add_dependency('colorize')
+  s.add_dependency('filesize')
   s.files = Dir['lib/**/*.rb']
   s.files += Dir['spec/**/*']
   s.files += Dir['*.md']

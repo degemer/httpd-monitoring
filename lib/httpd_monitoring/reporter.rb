@@ -15,11 +15,13 @@ module HttpdMonitoring
     end
 
     def alert(hits, time)
-      print "High traffic generated an alert - hits = #{hits}, triggered at #{time}\n".red
+      print "High traffic generated an alert - hits = #{convert_to_human(hits)},"\
+            " triggered at #{time}\n".red
     end
 
     def recover(hits, time)
-      print "Recover form alert - current hits = #{hits}, recovered at #{time}\n".green
+      print "Recover form alert - lat 2 min hits = #{convert_to_human(hits)},"\
+            " recovered at #{time}\n".green
     end
 
     protected
@@ -33,21 +35,25 @@ module HttpdMonitoring
     end
 
     def print_beautiful(datas)
-      final_report = "----------------------\nReport at #{Time.now}:\n"
+      final_report = '-' * 36 + "\nReport at #{Time.now}:\n"
       final_report += "Most frequented sections:\n"
       datas[:sections].each do |section, hits|
         final_report += "    #{section} -> #{hits} hits\n"
       end
       final_report += "Most active visitors:\n"
       datas[:ips].each do |ip, traffic|
-        final_report += "    #{ip} -> #{traffic}\n"
+        final_report += "    #{ip} -> #{convert_to_human(traffic)}\n"
       end
-      final_report += "Total traffic: #{datas[:traffic]}\n"
+      final_report += "Total traffic: #{convert_to_human(datas[:traffic])}\n"
       print final_report
     end
 
     def print_nothing
       print "#{Time.now}: no traffic\n"
+    end
+
+    def convert_to_human(bytes)
+      Filesize.from(bytes.to_s + ' B').pretty
     end
   end
 end

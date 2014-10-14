@@ -17,7 +17,7 @@ module HttpdMonitoring
     end
 
     def update_data_2min(data)
-      delete_old_2min(data[:date]) if @last_time < data[:date]
+      delete_old_2min(data[:date]) if data[:date] > @last_time
       @times_2min[data[:date]] += data[:bytes]
       @traffic_2min += data[:bytes]
     end
@@ -25,7 +25,10 @@ module HttpdMonitoring
     def delete_old_2min(date)
       @last_time = date
       @times_2min.each do |time, bytes|
-        @traffic_2min -= bytes if time + 120 > date
+        if time + 120 < date
+          @traffic_2min -= bytes
+          @times_2min.delete(time)
+        end
       end
     end
 

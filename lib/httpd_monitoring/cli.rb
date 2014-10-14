@@ -2,11 +2,11 @@ module HttpdMonitoring
   # Launch the program
   class CLI
     def initialize(args)
-      @parsed_args = HttpdMonitoring::Options.new(args)
+      @args = HttpdMonitoring::Options.new(args)
       @data = HttpdMonitoring::Data.new
-      @parser = HttpdMonitoring::Processor.new(@data, @parsed_args.threshold)
-      @path = @parsed_args.path
+      @path = @args.path
       @reporter = HttpdMonitoring::Reporter.new(@data)
+      @parser = HttpdMonitoring::Processor.new(@data, @reporter, @args.threshold)
     end
 
     def run

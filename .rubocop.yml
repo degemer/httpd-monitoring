@@ -14,3 +14,8 @@ Metrics/MethodLength:
 # Configuration parameters: Exclude.
 Style/FileName:
   Enabled: false
+
+# Offense count: 3
+# Configuration parameters: AllowURI, URISchemes.
+Metrics/LineLength:
+  Max: 86

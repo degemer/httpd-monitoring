@@ -5,9 +5,10 @@ require_relative '../lib/httpd_monitoring'
 def run_w3c_test
   log_file = File.dirname(__FILE__) + '/temp.log'
   FileUtils.touch(log_file)
-  thread = Thread.new { HttpdMonitoring::CLI.new([log_file]).run }
-  test = TestLog.new(log_file)
-  test.start
-
-  thread.exit
+  thread = Thread.current
+  Thread.new do
+    TestLog.new(log_file).start
+    thread.exit
+  end
+  HttpdMonitoring::CLI.new([log_file]).run
 end

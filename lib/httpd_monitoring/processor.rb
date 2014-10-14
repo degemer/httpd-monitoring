@@ -3,14 +3,13 @@ module HttpdMonitoring
   class Processor
     def initialize(data, reporter, threshold)
       @data = data
-      @parser = HttpdMonitoring::Parser.new
       @threshold = threshold
       @alert = false
       @reporter = reporter
     end
 
     def process(line)
-      datas = @parser.parse(line)
+      datas = HttpdMonitoring::Parser.parse(line)
       @data.insert(datas)
       alert_or_recover(@data.traffic_2min, datas[:date])
     end

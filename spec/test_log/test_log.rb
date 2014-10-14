@@ -17,7 +17,7 @@ class TestLog
   end
 
   def start
-    [1, 0.1, 0.01, 0, 0.1, 0.1].each do |sleep_time|
+    [0, 0.1, 0.01, 1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1].each do |sleep_time|
       launch_scenario(sleep_time, 10)
     end
   end

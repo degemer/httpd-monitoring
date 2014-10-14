@@ -15,12 +15,12 @@ module HttpdMonitoring
     end
 
     def alert(hits, time)
-      print "High traffic generated an alert - hits = #{convert_to_human(hits)},"\
+      print "High traffic generated an alert - hits = #{hits},"\
             " triggered at #{time}\n".red
     end
 
     def recover(hits, time)
-      print "Recover form alert - lat 2 min hits = #{convert_to_human(hits)},"\
+      print "Recover form alert - lat 2 min hits = #{hits},"\
             " recovered at #{time}\n".green
     end
 
@@ -41,8 +41,8 @@ module HttpdMonitoring
         final_report += "    #{section} -> #{hits} hits\n"
       end
       final_report += "Most active visitors:\n"
-      datas[:ips].each do |ip, traffic|
-        final_report += "    #{ip} -> #{convert_to_human(traffic)}\n"
+      datas[:ips].each do |ip, hits|
+        final_report += "    #{ip} -> #{hits} hits\n"
       end
       final_report += "Total traffic: #{convert_to_human(datas[:traffic])}\n"
       print final_report

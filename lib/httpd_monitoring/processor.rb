@@ -11,7 +11,7 @@ module HttpdMonitoring
     def process(line)
       datas = HttpdMonitoring::Parser.parse(line)
       @data.insert(datas)
-      alert_or_recover(@data.traffic_2min, datas[:date])
+      alert_or_recover(@data.hits_2min, datas[:date])
     end
 
     protected

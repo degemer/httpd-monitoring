@@ -9,7 +9,7 @@ module HttpdMonitoring
     end
 
     def threshold
-      20_000_000
+      5_000
     end
   end
 end

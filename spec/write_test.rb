@@ -10,5 +10,5 @@ def run_w3c_test
     TestLog.new(log_file).start
     thread.exit
   end
-  HttpdMonitoring::CLI.new([log_file]).run
+  HttpdMonitoring::CLI.new(['-l', '1200', log_file]).run
 end

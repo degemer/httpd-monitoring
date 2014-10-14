@@ -8,7 +8,7 @@
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 11
+  Max: 15
 
 # Offense count: 1
 # Configuration parameters: Exclude.

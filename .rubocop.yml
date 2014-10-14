@@ -18,4 +18,4 @@ Style/FileName:
 # Offense count: 3
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
-  Max: 86
+  Max: 90

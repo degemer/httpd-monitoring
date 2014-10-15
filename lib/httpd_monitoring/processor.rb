@@ -9,7 +9,7 @@ module HttpdMonitoring
     end
 
     def process(line)
-      datas = HttpdMonitoring::Parser.parse(line)
+      datas = HttpdMonitoring::Parser.parse_w3c(line)
       @data.insert(datas)
       alert_or_recover(@data.hits_2min, datas[:date])
     end

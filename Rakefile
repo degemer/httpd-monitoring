@@ -19,7 +19,7 @@ task :test_log do
     TestLog.new(log_file).start
     thread.exit
   end
-  HttpdMonitoring::CLI.new(['-l', '1200', log_file]).run
+  HttpdMonitoring::CLI.new(['-d','-l', '1200', log_file]).run
 end
 
 task default: [:syntax, :spec, :test_log]

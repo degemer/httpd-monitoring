@@ -8,7 +8,7 @@
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 15
+  Max: 13
 
 # Offense count: 1
 # Configuration parameters: Exclude.
@@ -18,4 +18,4 @@ Style/FileName:
 # Offense count: 3
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
-  Max: 90
+  Max: 82

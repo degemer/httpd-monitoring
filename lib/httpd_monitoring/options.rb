@@ -9,7 +9,7 @@ module HttpdMonitoring
       init_parser
       begin
         @parser.parse!(args)
-      rescue OptionParser::InvalidOption => e
+      rescue OptionParser::InvalidOption, OptionParser::InvalidArgument => e
         abort e.to_s
       end
       help if @options[:help]
@@ -23,14 +23,19 @@ module HttpdMonitoring
       @options[:threshold]
     end
 
+    def debug?
+      @options[:debug]
+    end
+
     protected
 
+    # rubocop:disable Metrics/MethodLength
     def init_parser
       @parser = OptionParser.new do |opts|
         opts.banner = 'Usage: httpd-monitoring -l LIMIT [w3c-log-file]'
-        opts.on('-l', '--limit LIMIT',
+        opts.on('-l', '--limit LIMIT', Integer,
                 'Trigger alert last 2 minutes hits are above LIMIT') do |l|
-          @options[:threshold] = l.to_i
+          @options[:threshold] = l
         end
         opts.on('-V', '--version',
                 'Display the httpd-monitoring version') do |_v|
@@ -40,12 +45,16 @@ module HttpdMonitoring
                 'Display this help') do |_h|
           @options[:help] = true
         end
+        opts.on('-d', '--debug',
+                'Display this help') do |_d|
+          @options[:debug] = true
+        end
       end
     end
 
     def check_valid_args
       abort 'LIMIT must be given' unless @options[:threshold]
-      abort 'No path given' unless @path
+      abort 'No file given' unless @path
       abort "#{@path} is not a file" unless File.file?(@path)
     end
 

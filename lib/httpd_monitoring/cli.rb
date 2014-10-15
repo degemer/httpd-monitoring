@@ -2,16 +2,19 @@ module HttpdMonitoring
   # Launch the program
   class CLI
     def initialize(args)
-      @args = HttpdMonitoring::Options.new(args)
-      @data = HttpdMonitoring::Data.new
+      @args = Options.new(args)
+      @logger = Logger.new(STDOUT)
+      @logger.level = @args.debug? ? Logger::DEBUG : Logger::ERROR
+      @data = Data.new
       @path = @args.path
-      @reporter = HttpdMonitoring::Reporter.new(@data)
-      @parser = HttpdMonitoring::Processor.new(@data, @reporter, @args.threshold)
+      @reporter = Reporter.new(@data)
+      @parser = Processor.new(@data, @reporter, @logger, @args.threshold)
     end
 
     def run
       EventMachine.run do
         Signal.trap('INT') do
+          print "Exiting httpd-monitoring\n"
           EventMachine.stop
           Thread.exit
         end

@@ -1,17 +1,22 @@
 module HttpdMonitoring
   # Receive w3c-log line, store it and then trigger alert if needed
   class Processor
-    def initialize(data, reporter, threshold)
+    def initialize(data, reporter, logger, threshold)
       @data = data
       @threshold = threshold
+      @logger = logger
       @alert = false
       @reporter = reporter
     end
 
     def process(line)
       datas = HttpdMonitoring::Parser.parse_w3c(line)
-      @data.insert(datas)
-      alert_or_recover(@data.hits_2min, datas[:date])
+      if datas.nil?
+        @logger.warn("Line could not be parsed: #{line}\n")
+      else
+        @data.insert(datas)
+        alert_or_recover(@data.hits_2min, datas[:date])
+      end
     end
 
     protected

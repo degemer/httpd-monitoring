@@ -34,8 +34,9 @@ module HttpdMonitoring
     def print_recover(hits, time)
       print_final "Recover from alert - last 2 min hits = #{hits},"\
                   " recovered at #{time}\n".green
-      @old_alerts.push([@current_alert, time])
+      @old_alerts.push([@current_alert[1], time])
       @before_reminder = 3
+      @current_alert = []
     end
 
     protected
@@ -61,15 +62,15 @@ module HttpdMonitoring
     end
 
     def alert_history
-      s = ''
-      @old_alerts.each do |start, recovery|
-        s += "Old alert: triggered at #{start}, recovered at #{recovery}\n"
+      hist = ''
+      @old_alerts.each do |s, e|
+        hist += "Old alert: triggered at #{s}, recovered at #{e}\n".light_white
       end
       unless @current_alert.empty?
-        s += "Current alert : hits = #{@current_alert[0]},"\
+        hist += "Current alert : hits = #{@current_alert[0]},"\
              " triggered at #{@current_alert[1]}\n".red
       end
-      s
+      hist
     end
   end
 end

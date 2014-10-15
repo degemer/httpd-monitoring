@@ -16,6 +16,7 @@ module HttpdMonitoring
       version if @options[:version]
       @path = @args.first
       check_valid_args
+      print_summary
     end
 
     def threshold
@@ -56,6 +57,11 @@ module HttpdMonitoring
     def version
       print "httpd-monitoring #{HttpdMonitoring::VERSION}\n"
       exit
+    end
+
+    def print_summary
+      print "httpd-monitoring started on file #{path} "\
+            "with limit #{@options[:threshold]}\n"
     end
   end
 end

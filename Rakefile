@@ -12,14 +12,9 @@ RSpec::Core::RakeTask.new(:spec)
 
 desc 'Test with generated w3c file'
 task :test_log do
-  log_file = File.dirname(__FILE__) + '/temp.log'
-  FileUtils.touch(log_file)
-  thread = Thread.current
-  Thread.new do
-    TestLog.new(log_file).start
-    thread.exit
-  end
-  HttpdMonitoring::CLI.new(['-d', '-l', '1200', log_file]).run
+  scenario = [10, 0, 0.01, 0.1, 0.1, 0.1, 10, 1, 1, 10, 1, 1, 1, 1,
+              1, 10, 1, 0.1, 0.1, 1]
+  TestLog.run(scenario, 1200)
 end
 
 task default: [:syntax, :spec, :test_log]

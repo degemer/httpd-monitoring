@@ -16,10 +16,21 @@ class TestLog
     @status = %w(404 403 418 301)
   end
 
-  def start
-    [0, 0.1, 0.01, 1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1].each do |sleep_time|
+  def start(scenario)
+    scenario.each do |sleep_time|
       launch_scenario(sleep_time, 10)
     end
+  end
+
+  def self.run(scenario, threshold)
+    log_file = File.dirname(__FILE__) + '/temp.log'
+    FileUtils.touch(log_file)
+    thread = Thread.current
+    Thread.new do
+      TestLog.new(log_file).start(scenario)
+      thread.exit
+    end
+    HttpdMonitoring::CLI.new(['-d', '-l', threshold.to_s, log_file]).run
   end
 
   protected

@@ -1,10 +1,14 @@
 require 'rake'
 require 'rubocop/rake_task'
+require 'rspec/core/rake_task'
 require_relative 'spec/test_log'
 require_relative 'lib/httpd_monitoring'
 
 desc 'Run RuboCop'
 RuboCop::RakeTask.new(:syntax)
+
+desc 'Run Rspec'
+RSpec::Core::RakeTask.new(:spec)
 
 desc 'Test with generated w3c file'
 task :test_log do
@@ -18,4 +22,4 @@ task :test_log do
   HttpdMonitoring::CLI.new(['-l', '1200', log_file]).run
 end
 
-task default: [:syntax, :test_log]
+task default: [:syntax, :spec, :test_log]

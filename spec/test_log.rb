@@ -1,5 +1,16 @@
 # Class for test purpose : write a w3c log file
 class TestLog
+  def self.run(scenario, threshold)
+    log_file = File.dirname(__FILE__) + '/temp.log'
+    FileUtils.touch(log_file)
+    thread = Thread.current
+    Thread.new do
+      TestLog.new(log_file).start(scenario)
+      thread.exit
+    end
+    HttpdMonitoring::CLI.new(['-d', '-l', threshold.to_s, log_file]).run
+  end
+
   def initialize(logfile)
     @logfile = File.open(logfile, 'a')
     # Remove Ruby buffer
@@ -22,17 +33,6 @@ class TestLog
     end
   end
 
-  def self.run(scenario, threshold)
-    log_file = File.dirname(__FILE__) + '/temp.log'
-    FileUtils.touch(log_file)
-    thread = Thread.current
-    Thread.new do
-      TestLog.new(log_file).start(scenario)
-      thread.exit
-    end
-    HttpdMonitoring::CLI.new(['-d', '-l', threshold.to_s, log_file]).run
-  end
-
   protected
 
   def launch_scenario(sleep_time, duration)
@@ -49,17 +49,15 @@ class TestLog
   end
 
   def log_host
-    @ips[@rand.rand(0...(@ips.length - 1))]
+    get_random(@ips)
   end
 
   def log_name
-    return '-' if @rand.rand(3) < 2
-    @names[@rand.rand(0...(@names.size - 1))]
+    get_random(@names, '-', 10)
   end
 
   def log_user
-    return '-' if @rand.rand(3) < 2
-    @users[@rand.rand(0...(@users.size - 1))]
+    get_random(@users, '-', 10)
   end
 
   def log_date
@@ -71,24 +69,27 @@ class TestLog
   end
 
   def log_method
-    return 'GET' if @rand.rand(3) < 2
-    @methods[@rand.rand(0...(@methods.size - 1))]
+    get_random(@methods, 'GET', 10)
   end
 
   def log_path
-    @paths[@rand.rand(0...(@paths.size - 1))]
+    get_random(@paths)
   end
 
   def log_protocol
-    @protocols[@rand.rand(0...(@protocols.size - 1))]
+    get_random(@protocols)
   end
 
   def log_status
-    return '200' if @rand.rand(10) < 9
-    @status[@rand.rand(0...(@status.size - 1))]
+    get_random(@status, '200', 100)
   end
 
   def log_bytes
     @rand.rand(0...(2000))
+  end
+
+  def get_random(array, default = nil, proba = 0)
+    return default if default && @rand.rand(proba) < proba - 1
+    array[@rand.rand(0...(array.size - 1))]
   end
 end

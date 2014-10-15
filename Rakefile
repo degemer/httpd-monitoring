@@ -10,11 +10,17 @@ RuboCop::RakeTask.new(:syntax)
 desc 'Run Rspec'
 RSpec::Core::RakeTask.new(:spec)
 
-desc 'Test with generated w3c file'
-task :test_log do
-  scenario = [10, 0, 0.01, 0.1, 0.1, 0.1, 10, 1, 1, 10, 1, 1, 1, 1,
-              1, 10, 1, 0.1, 0.1, 1]
+desc 'Short test (just trigger)with generated w3c file'
+task :short_test do
+  scenario = [10, 0, 0.01, 1, 0, 1]
   TestLog.run(scenario, 1200)
 end
 
-task default: [:syntax, :spec, :test_log]
+desc 'Long test with generated w3c file'
+task :long_test do
+  scenario = [10, 0, 0.01, 0.1, 0.1, 0.1, 10, 1, 1, 10, 1, 1, 1, 1,
+              10, 1, 0.1, 0, 0.1, 0.1, 10, 1, 1, 10, 1, 1, 1, 1]
+  TestLog.run(scenario, 1200)
+end
+
+task default: [:syntax, :spec, :long_test]

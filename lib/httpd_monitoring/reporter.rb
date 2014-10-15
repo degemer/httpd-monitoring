@@ -1,27 +1,18 @@
 module HttpdMonitoring
-  # Print a report to console when asked
+  # Parse and generate ready-to-print data for report
   class Reporter
-    def initialize(data)
+    def initialize(data, printer)
       @data = data
+      @printer = printer
     end
 
     def report
       datas = @data.select_data_10s
       if datas[:traffic] != 0
-        print_beautiful(analyse_data(datas))
+        @printer.print_report(analyse_data(datas))
       else
-        print_nothing
+        @printer.print_nothing
       end
-    end
-
-    def alert(hits, time)
-      print "High traffic generated an alert - hits = #{hits},"\
-            " triggered at #{time}\n".red
-    end
-
-    def recover(hits, time)
-      print "Recover form alert - lat 2 min hits = #{hits},"\
-            " recovered at #{time}\n".green
     end
 
     protected
@@ -32,28 +23,6 @@ module HttpdMonitoring
       { ips: ips_sorted[0..3],
         sections: sections_sorted[0..3],
         traffic: data[:traffic] }
-    end
-
-    def print_beautiful(datas)
-      final_report = '-' * 36 + "\nReport at #{Time.now}:\n"
-      final_report += "Most frequented sections:\n"
-      datas[:sections].each do |section, hits|
-        final_report += "    #{section} -> #{hits} hits\n"
-      end
-      final_report += "Most active visitors:\n"
-      datas[:ips].each do |ip, hits|
-        final_report += "    #{ip} -> #{hits} hits\n"
-      end
-      final_report += "Total traffic: #{convert_to_human(datas[:traffic])}\n"
-      print final_report
-    end
-
-    def print_nothing
-      print "#{Time.now}: no traffic\n"
-    end
-
-    def convert_to_human(bytes)
-      Filesize.from(bytes.to_s + ' B').pretty
     end
   end
 end

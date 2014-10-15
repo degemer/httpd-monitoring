@@ -5,6 +5,7 @@ require 'filesize'
 require 'optparse'
 
 require_relative 'httpd_monitoring/data'
+require_relative 'httpd_monitoring/printer'
 require_relative 'httpd_monitoring/reporter'
 require_relative 'httpd_monitoring/processor'
 require_relative 'httpd_monitoring/reader'

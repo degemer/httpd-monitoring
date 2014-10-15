@@ -7,8 +7,9 @@ module HttpdMonitoring
       @logger.level = @args.debug? ? Logger::DEBUG : Logger::ERROR
       @data = Data.new
       @path = @args.path
-      @reporter = Reporter.new(@data)
-      @parser = Processor.new(@data, @reporter, @logger, @args.threshold)
+      @printer = Printer.new
+      @reporter = Reporter.new(@data, @printer)
+      @parser = Processor.new(@data, @printer, @logger, @args.threshold)
     end
 
     def run

@@ -1,12 +1,12 @@
 module HttpdMonitoring
   # Receive w3c-log line, store it and then trigger alert if needed
   class Processor
-    def initialize(data, reporter, logger, threshold)
+    def initialize(data, printer, logger, threshold)
       @data = data
       @threshold = threshold
       @logger = logger
       @alert = false
-      @reporter = reporter
+      @printer = printer
     end
 
     def process(line)
@@ -28,12 +28,12 @@ module HttpdMonitoring
 
     def alert(hits, date)
       @alert = true
-      @reporter.alert(hits, date)
+      @printer.print_alert(hits, date)
     end
 
     def recover(hits, date)
       @alert = false
-      @reporter.recover(hits, date)
+      @printer.print_recover(hits, date)
     end
   end
 end

@@ -7,6 +7,7 @@ module HttpdMonitoring
       @limit_print = limit_print
     end
 
+    # Get datas and arrange them for report
     def report
       datas = @data.select_data_10s
       if datas[:traffic] != 0
@@ -18,6 +19,7 @@ module HttpdMonitoring
 
     protected
 
+    # Sort data for report
     def analyse_data(data)
       sections_sorted = data[:sections].sort_by { |_section, hits| hits }.reverse!
       ips_sorted = data[:ips].sort_by { |_ip, traffic| traffic }.reverse!

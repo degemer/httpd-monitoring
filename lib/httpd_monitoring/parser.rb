@@ -14,6 +14,7 @@ module HttpdMonitoring
                   }x
     REGEX_TIME = %r{^(\d+)/(\w+)/(\d+):(\d+):(\d+):(\d+) (...)(..)$}
 
+    # Parse a w3c commonlog format into a hash
     def self.parse_w3c(line)
       matches = REGEX_W3C.match(line)
       fail W3cParseError, line unless matches
@@ -25,6 +26,7 @@ module HttpdMonitoring
       result
     end
 
+    # Parse a w3c standard time into Ruby Time
     def self.parse_time(time)
       matches = REGEX_TIME.match(time)
       fail W3cParseError, time unless matches

@@ -12,8 +12,10 @@ module HttpdMonitoring
       @parser = Processor.new(@data, @printer, @logger, @args.threshold)
     end
 
+    # Launch the event loop
     def run
       EventMachine.run do
+        # Exit properly when user asks it
         Signal.trap('INT') do
           print "Exiting httpd-monitoring\n"
           EventMachine.stop

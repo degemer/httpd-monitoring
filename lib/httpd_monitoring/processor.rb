@@ -9,6 +9,7 @@ module HttpdMonitoring
       @printer = printer
     end
 
+    # Parse a w3c line, save parsed hash, and check if threshold has been hit
     def process(line)
       datas = HttpdMonitoring::Parser.parse_w3c(line)
       @data.insert(datas)
@@ -19,16 +20,19 @@ module HttpdMonitoring
 
     protected
 
+    # Check if alert or recover is triggered
     def alert_or_recover(hits, date)
       alert(hits, date) if !@alert && hits >= @threshold
       recover(hits, date) if @alert && hits < @threshold
     end
 
+    # Save alert state and print it
     def alert(hits, date)
       @alert = true
       @printer.print_alert(hits, date)
     end
 
+    # Save recover state and print it
     def recover(hits, date)
       @alert = false
       @printer.print_recover(hits, date)

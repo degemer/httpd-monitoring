@@ -7,6 +7,8 @@ module HttpdMonitoring
       @buffer = BufferedTokenizer.new
     end
 
+    # Taken from https://github.com/jordansissel/eventmachine-tail/blob/master/samples/tail.rb
+    # Called for every new line
     def receive_data(data)
       @buffer.extract(data).each do |line|
         @processor.process(line)

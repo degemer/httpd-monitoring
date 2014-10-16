@@ -1,9 +1,10 @@
 module HttpdMonitoring
   # Handle output format (except log)
   class Printer
+    REMINDER_DELAY  = 3
     def initialize
       @old_alerts = []
-      @before_reminder = 3
+      @before_reminder = REMINDER_DELAY
       @current_alert = []
     end
 
@@ -28,14 +29,14 @@ module HttpdMonitoring
       print "High traffic generated an alert - hits = #{hits},"\
             " triggered at #{time}\n".red
       @current_alert = [hits, time]
-      @before_reminder = 3
+      @before_reminder = REMINDER_DELAY
     end
 
     def print_recover(hits, time)
       print_final "Recover from alert - last 2 min hits = #{hits},"\
                   " recovered at #{time}\n".green
       @old_alerts.push([@current_alert[1], time])
-      @before_reminder = 3
+      @before_reminder = REMINDER_DELAY
       @current_alert = []
     end
 
@@ -50,7 +51,7 @@ module HttpdMonitoring
         if @before_reminder != 0
           @before_reminder -= 1
         else
-          @before_reminder = 3
+          @before_reminder = REMINDER_DELAY
           s += alert_history
         end
       end

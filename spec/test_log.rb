@@ -85,11 +85,11 @@ class TestLog
   end
 
   def log_bytes
-    @rand.rand(0...(2000))
+    @rand.rand(0..2000)
   end
 
   def get_random(array, default = nil, proba = 0)
     return default if default && @rand.rand(proba) < proba - 1
-    array[@rand.rand(0...(array.size - 1))]
+    array[@rand.rand(0...array.size)]
   end
 end

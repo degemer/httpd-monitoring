@@ -46,7 +46,7 @@ module HttpdMonitoring
           @options[:help] = true
         end
         opts.on('-d', '--debug',
-                'Display this help') do |_d|
+                'Enable debug log') do |_d|
           @options[:debug] = true
         end
       end

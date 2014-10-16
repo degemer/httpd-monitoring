@@ -52,7 +52,8 @@ describe HttpdMonitoring::Data do
       data.insert(datas)
       datas[:date] += 60
       data.insert(datas)
-      data.delete_old_2min(@time + 121)
+      new_time = @time + 121
+      data.instance_eval { delete_old_2min(new_time) }
       expect(data.instance_variable_get(:@hits_2min)).to eq(1)
       expect(data.instance_variable_get(:@times_2min)).to eq(@time + 60 => 1)
     end

@@ -27,6 +27,8 @@ module HttpdMonitoring
       temp
     end
 
+    protected
+
     def delete_old_2min(date)
       @last_time = date
       @times_2min.each do |time, hits|
@@ -36,8 +38,6 @@ module HttpdMonitoring
         end
       end
     end
-
-    protected
 
     def update_data_2min(data)
       delete_old_2min(data[:date]) if data[:date] > @last_time

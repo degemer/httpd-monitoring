@@ -17,9 +17,6 @@ describe HttpdMonitoring::Options do
     HttpdMonitoring::Options.new(['-l', '10', 'a'])
   end
 
-  before(:all) { $stdout = StringIO.new }
-  after(:all) { $stdout = STDOUT }
-
   it 'aborts when limit is not given' do
     expect { HttpdMonitoring::Options.new([]) }.to exit_with_code(1)
   end

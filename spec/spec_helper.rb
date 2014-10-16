@@ -29,4 +29,6 @@ end
 
 RSpec.configure do |config|
   config.include(ExitCodeMatchers)
+  config.before(:all) { $stdout = StringIO.new }
+  config.after(:all) { $stdout = STDOUT }
 end

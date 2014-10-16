@@ -19,9 +19,6 @@ describe HttpdMonitoring::Reporter do
     result
   end
 
-  before(:all) { $stdout = StringIO.new }
-  after(:all) { $stdout = STDOUT }
-
   describe '#report' do
     it 'gets data from Data' do
       allow(data).to receive(:select_data_10s).and_return(traffic: 0)

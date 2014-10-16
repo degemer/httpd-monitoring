@@ -19,3 +19,8 @@ Style/FileName:
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 82
+
+# Offense count: 1
+# For compat with 1.9.3
+Style/Lambda:
+  Enabled: false

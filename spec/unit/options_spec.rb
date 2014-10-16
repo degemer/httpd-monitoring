@@ -38,7 +38,7 @@ describe HttpdMonitoring::Options do
   end
 
   it 'prints summary when all args are given' do
-    expect(-> () { good_options }).to output(
+    expect(lambda { good_options }).to output(
       "httpd-monitoring started on file a with limit 10\n").to_stdout
   end
 

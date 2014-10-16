@@ -27,14 +27,6 @@ module HttpdMonitoring
       temp
     end
 
-    protected
-
-    def update_data_2min(data)
-      delete_old_2min(data[:date]) if data[:date] > @last_time
-      @times_2min[data[:date]] += 1
-      @hits_2min += 1
-    end
-
     def delete_old_2min(date)
       @last_time = date
       @times_2min.each do |time, hits|
@@ -43,6 +35,14 @@ module HttpdMonitoring
           @times_2min.delete(time)
         end
       end
+    end
+
+    protected
+
+    def update_data_2min(data)
+      delete_old_2min(data[:date]) if data[:date] > @last_time
+      @times_2min[data[:date]] += 1
+      @hits_2min += 1
     end
 
     def update_data_10s(data)

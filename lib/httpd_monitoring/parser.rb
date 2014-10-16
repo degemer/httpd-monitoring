@@ -10,7 +10,7 @@ module HttpdMonitoring
                     \[(.+)\]\s # Date
                     "(\w+)\s(/[^/]*).*\s(.+)"\s # Request
                     (\d+)\s # Status code
-                    (\d+)$ # Size
+                    (\d+|-)$ # Size
                   }x
     REGEX_TIME = %r{^(\d+)/(\w+)/(\d+):(\d+):(\d+):(\d+) (...)(..)$}
 

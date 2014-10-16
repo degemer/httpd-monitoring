@@ -13,6 +13,7 @@ module HttpdMonitoring
         @printer.print_report(analyse_data(datas))
       else
         @printer.print_nothing
+        @data.delete_old_2min(Time.now)
       end
     end
 

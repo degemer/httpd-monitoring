@@ -27,6 +27,10 @@ module HttpdMonitoring
       @options[:debug]
     end
 
+    def limit_print
+      @options[:limit_print] ? @options[:limit_print] : 3
+    end
+
     protected
 
     # rubocop:disable Metrics/MethodLength
@@ -36,6 +40,10 @@ module HttpdMonitoring
         opts.on('-l', '--limit LIMIT', Integer,
                 'Trigger alert last 2 minutes hits are above LIMIT') do |l|
           @options[:threshold] = l
+        end
+        opts.on('-p', '--print PRINT_LIMIT', Integer,
+                'Choose how many sections will be displayed') do |p|
+          @options[:limit_print] = p
         end
         opts.on('-V', '--version',
                 'Display the httpd-monitoring version') do |_v|

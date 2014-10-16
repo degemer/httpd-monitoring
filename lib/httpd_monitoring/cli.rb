@@ -8,7 +8,7 @@ module HttpdMonitoring
       @data = Data.new
       @path = @args.path
       @printer = Printer.new
-      @reporter = Reporter.new(@data, @printer)
+      @reporter = Reporter.new(@data, @printer, @args.limit_print)
       @parser = Processor.new(@data, @printer, @logger, @args.threshold)
     end
 

@@ -34,6 +34,7 @@ module HttpdMonitoring
     protected
 
     # rubocop:disable Metrics/MethodLength
+    # Use ruby OptionParser to get command args
     def init_parser
       @parser = OptionParser.new do |opts|
         opts.banner = 'Usage: httpd-monitoring -l LIMIT [w3c-log-file]'
@@ -60,22 +61,27 @@ module HttpdMonitoring
       end
     end
 
+    # Check that httpd-monitoring can run without problem
     def check_valid_args
       abort 'LIMIT must be given' unless @options[:threshold]
       abort 'No file given' unless @path
       abort "#{@path} is not a file" unless File.file?(@path)
+      abort "#{@path} is not readable" unless File.readable?(@path)
     end
 
+    # Print help and exit
     def help
       print @parser.help
       exit
     end
 
+    # Print version and exit
     def version
       print "httpd-monitoring #{HttpdMonitoring::VERSION}\n"
       exit
     end
 
+    # Print what httpd-monitoring is doing
     def print_summary
       print "httpd-monitoring started on file #{path} "\
             "with limit #{@options[:threshold]}\n"

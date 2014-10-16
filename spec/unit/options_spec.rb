@@ -10,10 +10,12 @@ describe HttpdMonitoring::Options do
   end
   let(:good_options) do
     allow(File).to receive(:file?).and_return(true)
+    allow(File).to receive(:readable?).and_return(true)
     options
   end
   let(:standard_options) do
     allow(File).to receive(:file?).and_return(true)
+    allow(File).to receive(:readable?).and_return(true)
     HttpdMonitoring::Options.new(['-l', '10', 'a'])
   end
 
@@ -31,6 +33,12 @@ describe HttpdMonitoring::Options do
 
   it 'aborts when log file is not a file' do
     expect { bad_options }.to exit_with_code(1)
+  end
+
+  it 'aborts when log file is not readable' do
+    allow(File).to receive(:file?).and_return(true)
+    allow(File).to receive(:readable?).and_return(false)
+    expect { options }.to exit_with_code(1)
   end
 
   it 'does not exit when all args are ok' do

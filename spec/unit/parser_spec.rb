@@ -15,8 +15,13 @@ describe HttpdMonitoring::Parser do
       expect(HttpdMonitoring::Parser.parse_w3c(line)).to eq(hash_result)
     end
 
-    it 'returns nil when unable to recognize w3c line' do
-      expect(HttpdMonitoring::Parser.parse_w3c('')).to be_nil
+    it 'fails when unable to recognize w3c line' do
+      begin
+        HttpdMonitoring::Parser.parse_w3c('')
+        fail Exception, 'no error raised'
+      rescue HttpdMonitoring::W3cParseError => e
+        expect(e.line).to eq('')
+      end
     end
   end
 
@@ -27,8 +32,13 @@ describe HttpdMonitoring::Parser do
         time.strftime('%d/%b/%Y:%H:%M:%S %z'))).to eq(time)
     end
 
-    it 'returns nil when unable to recognize w3c time' do
-      expect(HttpdMonitoring::Parser.parse_time('')).to be_nil
+    it 'fails when unable to recognize w3c time' do
+      begin
+        HttpdMonitoring::Parser.parse_time('')
+        fail Exception, 'no error raised'
+      rescue HttpdMonitoring::W3cParseError => e
+        expect(e.line).to eq('')
+      end
     end
   end
 end

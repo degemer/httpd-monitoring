@@ -11,12 +11,10 @@ module HttpdMonitoring
 
     def process(line)
       datas = HttpdMonitoring::Parser.parse_w3c(line)
-      if datas.nil?
-        @logger.warn("Line could not be parsed: #{line}\n")
-      else
-        @data.insert(datas)
-        alert_or_recover(@data.hits_2min, datas[:date])
-      end
+      @data.insert(datas)
+      alert_or_recover(@data.hits_2min, datas[:date])
+    rescue HttpdMonitoring::W3cParseError => e
+      @logger.warn("Could not parse: #{e.line}\n")
     end
 
     protected

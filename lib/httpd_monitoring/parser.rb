@@ -16,19 +16,18 @@ module HttpdMonitoring
 
     def self.parse_w3c(line)
       matches = REGEX_W3C.match(line)
-      return nil unless matches
+      fail W3cParseError, line unless matches
       result = {}
       result[:host] = matches[1]
       result[:date] = parse_time(matches[4])
       result[:path] = matches[6]
       result[:bytes] = matches[9].to_i
-      return nil unless result[:date]
       result
     end
 
     def self.parse_time(time)
       matches = REGEX_TIME.match(time)
-      return nil unless matches
+      fail W3cParseError, time unless matches
       Time.new(matches[3].to_i, MONTHS[matches[2]], matches[1].to_i,
                matches[4].to_i, matches[5].to_i, matches[6].to_i,
                matches[7] + ':' + matches[8])

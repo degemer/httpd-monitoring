@@ -16,6 +16,19 @@ module HttpdMonitoring
       update_data_2min(data)
     end
 
+    def select_data_10s
+      temp = {}
+      temp[:sections] = @sections_10s.dup
+      temp[:traffic] = @traffic_10s
+      temp[:ips] = @ips_10s.dup
+      @sections_10s = Hash.new(0)
+      @traffic_10s = 0
+      @ips_10s = Hash.new(0)
+      temp
+    end
+
+    protected
+
     def update_data_2min(data)
       delete_old_2min(data[:date]) if data[:date] > @last_time
       @times_2min[data[:date]] += 1
@@ -36,17 +49,6 @@ module HttpdMonitoring
       @sections_10s[data[:path]] += 1
       @ips_10s[data[:host]] += 1
       @traffic_10s += data[:bytes]
-    end
-
-    def select_data_10s
-      temp = {}
-      temp[:sections] = @sections_10s.dup
-      temp[:traffic] = @traffic_10s
-      temp[:ips] = @ips_10s.dup
-      @sections_10s = Hash.new(0)
-      @traffic_10s = 0
-      @ips_10s = Hash.new(0)
-      temp
     end
   end
 end

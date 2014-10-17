@@ -1,5 +1,6 @@
 # Class for test purpose : write a w3c log file
 class TestLog
+  # Run a complete scenario (array of sleep time)
   def self.run(scenario, threshold)
     log_file = File.dirname(__FILE__) + '/temp.log'
     FileUtils.touch(log_file)
@@ -27,13 +28,14 @@ class TestLog
     @status = %w(404 403 418 301)
   end
 
+  # Start a scenario
   def start(scenario)
     scenario.each do |sleep_time|
       launch_scenario(sleep_time, 10)
     end
   end
 
-  protected
+  private
 
   def launch_scenario(sleep_time, duration)
     start_time = Time.now
@@ -43,6 +45,7 @@ class TestLog
     end
   end
 
+  # Return a w3c log format line
   def log_line
     "#{log_host} #{log_name} #{log_user} #{log_date} "\
     "#{log_request} #{log_status} #{log_bytes}"

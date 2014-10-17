@@ -17,7 +17,7 @@ module HttpdMonitoring
       end
     end
 
-    protected
+    private
 
     # Sort data for report
     def analyse_data(data)

@@ -31,7 +31,7 @@ module HttpdMonitoring
       @options[:limit_print] ? @options[:limit_print] : 3
     end
 
-    protected
+    private
 
     # rubocop:disable Metrics/MethodLength
     # Use ruby OptionParser to get command args

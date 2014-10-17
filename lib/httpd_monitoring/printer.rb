@@ -44,7 +44,7 @@ module HttpdMonitoring
       @current_alert = []
     end
 
-    protected
+    private
 
     # Add a header to all report
     def print_final_report(report)

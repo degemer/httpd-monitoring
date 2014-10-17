@@ -29,7 +29,7 @@ module HttpdMonitoring
       temp
     end
 
-    protected
+    private
 
     # Update last 2 mins hits by deleting old hits (> 2min)
     def delete_old_2min(date)

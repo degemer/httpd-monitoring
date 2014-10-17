@@ -18,7 +18,7 @@ module HttpdMonitoring
       @logger.warn("Could not parse: #{e.line}\n")
     end
 
-    protected
+    private
 
     # Check if alert or recover is triggered
     def alert_or_recover(hits, date)

@@ -24,6 +24,8 @@ httpd-monitoring -l LIMIT path-to-log-file
 
 LIMIT being the alert threshold.
 
+It will then display a report every 10s, and alerts/recovers when threshold is crossed.
+
 ## Tests
 
 Tests can be launched using `rake`:
@@ -40,15 +42,14 @@ It is tested on Travis : [![Build Status](https://travis-ci.org/degemer/httpd-mo
 OS:
 - Linux: tested on Debian 7.
 - Windows: not working, gem `eventmachine-tail` needs `eventmachine` method `watch_file`, not working on Windows.
-- Mac: not tested. It shouldn' t have the same issue than Windwos, but, from [eventmachine](https://github.com/eventmachine/eventmachine):
-> On Mac OS X, file watching only works when kqueue is enabled
+- Mac: not tested. It should not have the same issue than Windows.
 
 Ruby >= 1.9.3 (tested with 1.9.3, 2.0.0, 2.1.3).
 
 ## Improvements
 
 - Alerts and recovers are only tested when something is written to the log file. If there is an alert going on, and then no traffic, alert will not be recovered until something is written. Could be solved by adding a periodic callback to check if alert is recovered.
-- Alarm class should be called after data is inserted, and not insert data itself. (related to previous improvement)
+- Alarm class should be called after data is inserted, and not insert data itself. (also related to previous improvement)
 - HTTP code are not analyzed now ; they could be, and could be added to the report (non-ok codes associated with number of hits).
 - Windows compatibility might be obtained by using [em-dir-watcher](https://github.com/mockko/em-dir-watcher).
 - Add an option to remove colors from output to be able to redirect a neutral ` httpd-monitoring` output to a file. (without having strange characters in file)

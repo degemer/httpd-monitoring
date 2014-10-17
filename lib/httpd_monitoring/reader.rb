@@ -1,9 +1,9 @@
 module HttpdMonitoring
-  # Read line from w3c-log and then pass it to a HttpdMonitoring::Processor
+  # Read line from w3c-log and then pass it to a HttpdMonitoring::Alarm
   class Reader < EventMachine::FileTail
-    def initialize(path, processor)
+    def initialize(path, alarm)
       super(path, -1)
-      @processor = processor
+      @alarm = alarm
       @buffer = BufferedTokenizer.new
     end
 
@@ -11,7 +11,7 @@ module HttpdMonitoring
     # Called for every new line
     def receive_data(data)
       @buffer.extract(data).each do |line|
-        @processor.process(line)
+        @alarm.process(line)
       end
     end
   end

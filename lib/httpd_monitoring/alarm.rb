@@ -1,6 +1,6 @@
 module HttpdMonitoring
   # Receive w3c-log line, store it and then trigger alert if needed
-  class Processor
+  class Alarm
     def initialize(data, printer, logger, threshold)
       @data = data
       @threshold = threshold

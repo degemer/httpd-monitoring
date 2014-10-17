@@ -9,7 +9,7 @@ module HttpdMonitoring
       @path = @args.path
       @printer = Printer.new
       @reporter = Reporter.new(@data, @printer, @args.limit_print)
-      @parser = Processor.new(@data, @printer, @logger, @args.threshold)
+      @parser = Alarm.new(@data, @printer, @logger, @args.threshold)
     end
 
     # Launch the event loop

@@ -13,7 +13,7 @@ describe HttpdMonitoring::Alarm do
 
   describe '#process' do
     it 'warn if parse failed' do
-      expect(logger).to receive(:warn)
+      expect(logger).to receive(:error)
       alarm.process('')
     end
 

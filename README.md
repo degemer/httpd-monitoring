@@ -10,7 +10,7 @@ It triggers an alarm when last 2min hits are above a threshold (arg given in com
 
 Use [Bundler](http://bundler.io) to install it.
 
-Just run `bundle`. It will install everythin needed.
+Just run `bundle`. It will install everything needed.
 
 You should then be able to directly use `httpd-monitoring` command.
 
@@ -27,21 +27,28 @@ LIMIT being the alert threshold.
 ## Tests
 
 Tests can be launched using `rake`:
-- `rake syntax`: check Ruby for bad syntax practices,
+- `rake syntax`: check Ruby for bad syntax practices thanks to [Rubocop](https://github.com/bbatsov/rubocop),
 - `rake spec`: run [Rspec](http://rspec.info) tests,
-- `rake short_test`: run a short test on httpd-monitoring, writing a log file and writing `httpd-monitoring` output to console,
-- `rake long_test`: run a long test on httpd-monitoring to test alert management,
+- `rake short_test`: run a short test on httpd-monitoring, writing a log file and writing `httpd-monitoring` output to console, (use spec/test_log)
+- `rake long_test`: run a long test on httpd-monitoring to test alert management, (use spec/test_log)
 - `rake`: runs `syntax`, `spec` and `long_test`.
 
-It is tested on Travis : [![Build Status]https://travis-ci.org/degemer/httpd-monitoring.svg?branch=master)](https://travis-ci.org/degemer/httpd-monitoring)
+It is tested on Travis : [![Build Status](https://travis-ci.org/degemer/httpd-monitoring.svg?branch=master)](https://travis-ci.org/degemer/httpd-monitoring)
 
 ## Compatibility
 
 OS:
-- Linux: tested on debian 7.
+- Linux: tested on Debian 7.
 - Windows: not working, gem `eventmachine-tail` needs `eventmachine` method `watch_file`, not working on Windows.
-- Mac: not tested.
+- Mac: not tested. It shouldn' t have the same issue than Windwos, but, from [eventmachine](https://github.com/eventmachine/eventmachine):
+> On Mac OS X, file watching only works when kqueue is enabled
 
-Ruby versions: fully compatible with 1.9.3, 2.0.0, 2.1.3 (see tests on [Travis](https://travis-ci.org/degemer/httpd-monitoring)).
+Ruby >= 1.9.3 (tested with 1.9.3, 2.0.0, 2.1.3).
 
 ## Improvements
+
+- Alerts and recovers are only tested when something is written to the log file. If there is an alert going on, and then no traffic, alert will not be recovered until something is written. Could be solved by adding a periodic callback to check if alert is recovered.
+- Alarm class should be called after data is inserted, and not insert data itself. (related to previous improvement)
+- HTTP code are not analyzed now ; they could be, and could be added to the report (non-ok codes associated with number of hits).
+- Windows compatibility might be obtained by using [em-dir-watcher](https://github.com/mockko/em-dir-watcher).
+- Add an option to remove colors from output to be able to redirect a neutral ` httpd-monitoring` output to a file. (without having strange characters in file)

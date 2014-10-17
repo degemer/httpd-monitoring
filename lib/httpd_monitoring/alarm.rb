@@ -15,7 +15,7 @@ module HttpdMonitoring
       @data.insert(datas)
       alert_or_recover(@data.hits_2min, datas[:date])
     rescue HttpdMonitoring::W3cParseError => e
-      @logger.warn("Could not parse: #{e.line}\n")
+      @logger.error("Could not parse: #{e.line}\n")
     end
 
     private

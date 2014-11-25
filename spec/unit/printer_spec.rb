@@ -50,4 +50,39 @@ describe HttpdMonitoring::Printer do
       expect(printer.instance_variable_get(:@old_alerts)).to eq([[time, n_time]])
     end
   end
+
+  describe '#alert_history' do
+    context 'when no alert history' do
+      it 'returns empty string' do
+        expect(printer.instance_eval { alert_history }).to be_eql ''
+      end
+    end
+    context 'when alert ongoing' do
+      it 'returns current alert' do
+        printer.print_alert(10, time)
+        expect(printer.instance_eval { alert_history }).to include(
+          "Current alert : hits = 10, triggered at #{time}")
+      end
+    end
+    context 'when there is an old alert' do
+      it 'returns current alert' do
+        printer.print_alert(10, time)
+        printer.print_recover(10, time)
+        expect(printer.instance_eval { alert_history }).to include(
+          "Old alert: triggered at #{time}, recovered at #{time}")
+      end
+    end
+  end
+
+  describe '#print_final' do
+    it 'adds alert history when needed' do
+      printer.print_alert(10, time)
+      printer.print_nothing
+      printer.print_nothing
+      printer.print_nothing
+      allow(printer).to receive(:alert_history).and_return('')
+      expect(printer).to receive(:alert_history)
+      printer.print_nothing
+    end
+  end
 end

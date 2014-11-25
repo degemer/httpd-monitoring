@@ -37,6 +37,8 @@ Tests can be launched using `rake`:
 
 It is tested on Travis : [![Build Status](https://travis-ci.org/degemer/httpd-monitoring.svg?branch=master)](https://travis-ci.org/degemer/httpd-monitoring)
 
+Code is analyzed by Code Climate : [![Code Climate](https://codeclimate.com/github/degemer/httpd-monitoring/badges/gpa.svg)](https://codeclimate.com/github/degemer/httpd-monitoring) [![Test Coverage](https://codeclimate.com/github/degemer/httpd-monitoring/badges/coverage.svg)](https://codeclimate.com/github/degemer/httpd-monitoring)
+
 ## Compatibility
 
 OS:

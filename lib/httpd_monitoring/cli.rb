@@ -9,7 +9,7 @@ module HttpdMonitoring
       @path = @args.path
       @printer = Printer.new
       @reporter = Reporter.new(@data, @printer, @args.limit_print)
-      @parser = Alarm.new(@data, @printer, @logger, @args.threshold)
+      @alarm = Alarm.new(@data, @printer, @logger, @args.threshold)
     end
 
     # Launch the event loop
@@ -21,7 +21,7 @@ module HttpdMonitoring
           EventMachine.stop
           Thread.exit
         end
-        EventMachine.file_tail(@path, HttpdMonitoring::Reader, @parser)
+        EventMachine.file_tail(@path, HttpdMonitoring::Reader, @alarm)
         EventMachine::PeriodicTimer.new(10) do
           @reporter.report
         end

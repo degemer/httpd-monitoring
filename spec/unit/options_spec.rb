@@ -91,4 +91,10 @@ describe HttpdMonitoring::Options do
       expect(standard_options.debug?).to be_falsey
     end
   end
+
+  describe '#threshold' do
+    it 'returns threshold' do
+      expect(good_options.threshold).to be_eql 10
+    end
+  end
 end
